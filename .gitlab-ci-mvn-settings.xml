@@ -26,7 +26,7 @@
       <configuration>
         <httpHeaders>
           <property>
-            <algorithmName>Job-Token</algorithmName>
+            <name>Job-Token</name>
             <value>${env.CI_JOB_TOKEN}</value>
           </property>
         </httpHeaders>
@@ -38,7 +38,7 @@
       <configuration>
         <httpHeaders>
           <property>
-            <algorithmName>Job-Token</algorithmName>
+            <name>Job-Token</name>
             <value>${env.CI_JOB_TOKEN}</value>
           </property>
         </httpHeaders>
@@ -50,7 +50,7 @@
     <mirror>
       <id>maven-default-http-blocker</id>
       <mirrorOf>external:dummy:*</mirrorOf>
-      <algorithmName>Pseudo repository to mirror external repositories initially using HTTP.</algorithmName>
+      <name>Pseudo repository to mirror external repositories initially using HTTP.</name>
       <url>http://0.0.0.0/</url>
       <blocked>true</blocked>
     </mirror>
@@ -58,7 +58,7 @@
     <mirror>
       <id>private-nexus3-maven</id>
       <mirrorOf>central</mirrorOf>
-      <algorithmName>private-nexus3-maven</algorithmName>
+      <name>private-nexus3-maven</name>
       <url>http://nexus.sprouts.kr/repository/maven-public/</url>
       <blocked>false</blocked>
     </mirror>
@@ -66,7 +66,7 @@
     <mirror>
       <id>private-nexus3-maven-releases</id>
       <mirrorOf>releases</mirrorOf>
-      <algorithmName>private-nexus</algorithmName>
+      <name>private-nexus</name>
       <url>http://nexus.sprouts.kr/repository/maven-releases/</url>
       <blocked>false</blocked>
     </mirror>
@@ -74,7 +74,7 @@
     <mirror>
       <id>private-nexus3-maven</id>
       <mirrorOf>snapshots</mirrorOf>
-      <algorithmName>private-nexus3-maven</algorithmName>
+      <name>private-nexus3-maven</name>
       <url>http://nexus.sprouts.kr/repository/maven-snapshots/</url>
       <blocked>false</blocked>
     </mirror>
