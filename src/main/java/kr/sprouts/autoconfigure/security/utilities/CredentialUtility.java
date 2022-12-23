@@ -10,14 +10,14 @@ import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class CredentialProviderUtility {
+public class CredentialUtility {
     public static SecretKey secretKeyFor(AlgorithmType algorithmType) {
         if (!algorithmType.getSupportKeyType().equals(SecretKey.class)) {
             throw new IllegalArgumentException("Unsupported algorithm type '" + algorithmType + "'");
         }
 
         if (Arrays.asList(algorithmType.getCredentialTypes()).contains(CredentialType.API_KEY)) {
-            return CredentialProviderUtility.generate(algorithmType);
+            return CredentialUtility.generate(algorithmType);
         } else if (Arrays.asList(algorithmType.getCredentialTypes()).contains(CredentialType.BEARER_TOKEN)) {
             return Keys.secretKeyFor(algorithmType.getSignatureAlgorithm());
         }

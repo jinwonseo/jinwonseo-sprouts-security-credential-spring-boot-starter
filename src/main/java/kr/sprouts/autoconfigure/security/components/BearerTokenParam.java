@@ -13,6 +13,8 @@ import java.util.UUID;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC, staticName = "of")
 public class BearerTokenParam extends CredentialParam {
     @NonNull
+    private UUID providerId;
+    @NonNull
     private UUID memberId;
     @NonNull
     private UUID clientId;

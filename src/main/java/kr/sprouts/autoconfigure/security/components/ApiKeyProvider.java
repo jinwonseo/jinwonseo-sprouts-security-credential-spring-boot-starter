@@ -14,22 +14,19 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.UUID;
 
 @Getter
 public class ApiKeyProvider extends CredentialProvider {
-    private final UUID providerId;
     private final String header;
     private final AlgorithmType algorithmType;
     private final EncodeType encodeType;
     private final SecretKey secretKey;
 
-    private ApiKeyProvider(UUID providerId, String header, AlgorithmType algorithmType, EncodeType encodeType, String encodedSecretKeyString) {
+    private ApiKeyProvider(String header, AlgorithmType algorithmType, EncodeType encodeType, String encodedSecretKeyString) {
         if (!Arrays.asList(algorithmType.getCredentialTypes()).contains(CredentialType.API_KEY)) {
             throw new IllegalArgumentException("Not available algorithm");
         }
 
-        this.providerId = providerId;
         this.header = header;
         this.algorithmType = algorithmType;
         this.encodeType = encodeType;
@@ -43,8 +40,8 @@ public class ApiKeyProvider extends CredentialProvider {
         this.secretKey = secretKey;
     }
 
-    public static ApiKeyProvider of(UUID providerId, String header, AlgorithmType algorithmType, EncodeType encodeType, String encodedSecretKeyString) {
-        return new ApiKeyProvider(providerId, header, algorithmType, encodeType, encodedSecretKeyString);
+    public static ApiKeyProvider of(String header, AlgorithmType algorithmType, EncodeType encodeType, String encodedSecretKeyString) {
+        return new ApiKeyProvider(header, algorithmType, encodeType, encodedSecretKeyString);
     }
 
     @Override
@@ -53,9 +50,11 @@ public class ApiKeyProvider extends CredentialProvider {
             throw new IllegalArgumentException("Unexpected parameter " + param.getClass().getSimpleName());
         }
 
-        String plainText = String.format("%s/%s/%s", this.providerId, ((ApiKeyParam) param).getMemberId(), ((ApiKeyParam) param).getClientId());
-
-        return ApiKey.of(this.header, this.encode(this.encrypt(plainText)));
+        return ApiKey.of(this.header, this.encode(this.encrypt(String.format("%s/%s/%s",
+                ((ApiKeyParam) param).getProviderId(),
+                ((ApiKeyParam) param).getMemberId(),
+                ((ApiKeyParam) param).getClientId()
+        ))));
     }
 
     public String consume(String encodedAndEncryptedText) {
