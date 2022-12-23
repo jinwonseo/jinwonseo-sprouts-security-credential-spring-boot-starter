@@ -4,22 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.UUID;
-
-@ConfigurationProperties(prefix = "sprouts.security.credential-provider")
+@ConfigurationProperties(prefix = "sprouts.security.credential")
 @Getter
 @Setter
-public class CredentialProviderProperty {
-    private UUID id;
-    private CredentialProperty credential;
-
-    @Getter
-    @Setter
-    public static class CredentialProperty {
-        private String type;
-        private ApiKeyProperty apiKey;
-        private BearerTokenProperty bearerToken;
-    }
+public class CredentialProperty {
+    private String type;
+    private ApiKeyProperty apiKey;
+    private BearerTokenProperty bearerToken;
 
     @Getter
     @Setter

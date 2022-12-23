@@ -16,18 +16,16 @@ import java.util.UUID;
 
 @Getter
 public class BearerTokenProvider extends CredentialProvider {
-    private final UUID providerId;
     private final String header;
     private final AlgorithmType algorithmType;
     private final EncodeType encodeType;
     private final SecretKey secretKey;
 
-    private BearerTokenProvider(UUID providerId, String header, AlgorithmType algorithmType, EncodeType encodeType, String encodedSecretKeyString) {
+    private BearerTokenProvider(String header, AlgorithmType algorithmType, EncodeType encodeType, String encodedSecretKeyString) {
         if (!Arrays.asList(algorithmType.getCredentialTypes()).contains(CredentialType.BEARER_TOKEN)) {
             throw new IllegalArgumentException("Not available algorithm");
         }
 
-        this.providerId = providerId;
         this.header = header;
         this.algorithmType = algorithmType;
         this.encodeType = encodeType;
@@ -41,8 +39,8 @@ public class BearerTokenProvider extends CredentialProvider {
         this.secretKey = secretKey;
     }
 
-    public static BearerTokenProvider of(UUID providerId, String header, AlgorithmType algorithmType, EncodeType encodeType, String encodedSecretKeyString) {
-        return new BearerTokenProvider(providerId, header, algorithmType, encodeType, encodedSecretKeyString);
+    public static BearerTokenProvider of(String header, AlgorithmType algorithmType, EncodeType encodeType, String encodedSecretKeyString) {
+        return new BearerTokenProvider(header, algorithmType, encodeType, encodedSecretKeyString);
     }
 
     @Override
@@ -52,6 +50,7 @@ public class BearerTokenProvider extends CredentialProvider {
         }
 
         return BearerToken.of(header, this.create(
+                ((BearerTokenParam)param).getProviderId(),
                 ((BearerTokenParam)param).getMemberId(),
                 ((BearerTokenParam)param).getClientId(),
                 ((BearerTokenParam)param).getValidityInSeconds())
@@ -62,13 +61,13 @@ public class BearerTokenProvider extends CredentialProvider {
         return this.parse(claimsJws);
     }
 
-    private String create(UUID memberId, UUID clientId, Long validityInSeconds) {
+    private String create(UUID providerId, UUID memberId, UUID clientId, Long validityInSeconds) {
         LocalDateTime currentLocalDateTime = LocalDateTime.now();
 
         Claims claims = Jwts.claims();
 
         claims.setId(UUID.randomUUID().toString());
-        claims.setIssuer(this.providerId.toString());
+        claims.setIssuer(providerId.toString());
         claims.setSubject(memberId.toString());
         claims.setAudience(clientId.toString());
         claims.setNotBefore(Timestamp.valueOf(currentLocalDateTime));
