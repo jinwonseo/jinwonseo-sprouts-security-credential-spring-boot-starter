@@ -45,7 +45,7 @@ public class ApiKeyProvider extends CredentialProvider {
     }
 
     @Override
-    public Credential provide(CredentialParam param) {
+    public ApiKey provide(CredentialParam param) {
         if (!(param instanceof ApiKeyParam)) {
             throw new IllegalArgumentException("Unexpected parameter " + param.getClass().getSimpleName());
         }

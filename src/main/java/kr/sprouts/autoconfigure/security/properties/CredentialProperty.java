@@ -8,7 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 public class CredentialProperty {
-    private String type;
     private ApiKeyProperty apiKey;
     private BearerTokenProperty bearerToken;
 
