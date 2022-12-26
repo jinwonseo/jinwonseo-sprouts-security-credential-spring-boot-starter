@@ -44,7 +44,7 @@ public class BearerTokenProvider extends CredentialProvider {
     }
 
     @Override
-    public Credential provide(CredentialParam param) {
+    public BearerToken provide(CredentialParam param) {
         if (!(param instanceof BearerTokenParam)) {
             throw new IllegalArgumentException("Unexpected parameter " + param.getClass().getSimpleName());
         }
