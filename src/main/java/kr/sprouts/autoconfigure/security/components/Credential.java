@@ -2,7 +2,7 @@ package kr.sprouts.autoconfigure.security.components;
 
 import kr.sprouts.autoconfigure.security.enumerations.CredentialType;
 
-public abstract class Credential {
+abstract class Credential {
     private final CredentialType type;
     private final String header;
     private final String value;

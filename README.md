@@ -12,7 +12,7 @@ Spring boot starter with security credential.
     <dependency>
       <groupId>kr.sprouts.autoconfigure</groupId>
       <artifactId>sprouts-security-credential-spring-boot-starter</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.0.2-SNAPSHOT</version>
     </dependency>
   </dependencies>
   ```
@@ -20,7 +20,7 @@ Spring boot starter with security credential.
 * gradle
   ```groovy
   dependencies {
-    implementation 'kr.sprouts.autoconfigure:sprouts-security-credential-spring-boot-starter:0.0.1-SNAPSHOT'
+    implementation 'kr.sprouts.autoconfigure:sprouts-security-credential-spring-boot-starter:0.0.2-SNAPSHOT'
   }
   ```
 
@@ -28,8 +28,7 @@ Spring boot starter with security credential.
   ```yml
   sprouts:
     security:
-      credential:
-        type: <ApiKey or BearerToken> 
+      credential: 
         api-key:
           header: <String>
           key:

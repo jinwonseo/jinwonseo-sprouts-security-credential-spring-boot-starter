@@ -2,9 +2,7 @@ package kr.sprouts.autoconfigure.security.configurations;
 
 import kr.sprouts.autoconfigure.security.components.ApiKeyProvider;
 import kr.sprouts.autoconfigure.security.components.BearerTokenProvider;
-import kr.sprouts.autoconfigure.security.components.CredentialProvider;
 import kr.sprouts.autoconfigure.security.enumerations.AlgorithmType;
-import kr.sprouts.autoconfigure.security.enumerations.CredentialType;
 import kr.sprouts.autoconfigure.security.enumerations.EncodeType;
 import kr.sprouts.autoconfigure.security.properties.CredentialProperty;
 import org.slf4j.LoggerFactory;
@@ -26,28 +24,22 @@ public class CredentialConfiguration {
     }
 
     @Bean
-    public CredentialProvider credentialProvider() {
-        CredentialType credentialType = CredentialType.nameOf(this.credentialProperty.getType());
+    public ApiKeyProvider apiKeyProvider() {
+        return ApiKeyProvider.of(
+                this.credentialProperty.getApiKey().getHeader(),
+                AlgorithmType.valueOf(this.credentialProperty.getApiKey().getKey().getAlgorithm()),
+                EncodeType.nameOf(this.credentialProperty.getApiKey().getKey().getEncodeType()),
+                this.credentialProperty.getApiKey().getKey().getEncodedString()
+        );
+    }
 
-        switch (credentialType) {
-            case API_KEY:
-                return ApiKeyProvider.of(
-                        this.credentialProperty.getApiKey().getHeader(),
-                        AlgorithmType.valueOf(this.credentialProperty.getApiKey().getKey().getAlgorithm()),
-                        EncodeType.nameOf(this.credentialProperty.getApiKey().getKey().getEncodeType()),
-                        this.credentialProperty.getApiKey().getKey().getEncodedString()
-                );
-
-            case BEARER_TOKEN:
-                return BearerTokenProvider.of(
-                        this.credentialProperty.getBearerToken().getHeader(),
-                        AlgorithmType.valueOf(this.credentialProperty.getBearerToken().getKey().getAlgorithm()),
-                        EncodeType.nameOf(this.credentialProperty.getBearerToken().getKey().getEncodeType()),
-                        this.credentialProperty.getBearerToken().getKey().getEncodedString()
-                );
-
-            default:
-                throw new IllegalArgumentException("Unsupported credential type '" + credentialType + "'");
-        }
+    @Bean
+    public BearerTokenProvider bearerTokenProvider() {
+        return BearerTokenProvider.of(
+                this.credentialProperty.getBearerToken().getHeader(),
+                AlgorithmType.valueOf(this.credentialProperty.getBearerToken().getKey().getAlgorithm()),
+                EncodeType.nameOf(this.credentialProperty.getBearerToken().getKey().getEncodeType()),
+                this.credentialProperty.getBearerToken().getKey().getEncodedString()
+        );
     }
 }
