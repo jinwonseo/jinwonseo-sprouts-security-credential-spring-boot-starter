@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>kr.sprouts.autoconfigure</groupId>
 	<artifactId>sprouts-security-credential-spring-boot-starter</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>sprouts-security-credential-spring-boot-starter</name>
 	<description>Sprouts security credential autoconfigure</description>
 	<properties>
@@ -93,14 +93,6 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-to-slf4j</artifactId>
 			<version>${log4j2.version}</version>
-		</dependency>
-
-		<!-- Lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
-			<optional>true</optional>
 		</dependency>
 
 		<!-- Test -->
